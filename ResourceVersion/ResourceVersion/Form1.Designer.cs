@@ -46,6 +46,7 @@
             this.btnIOS = new System.Windows.Forms.Button();
             this.labIOSOutPath = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
+            this.SelectWindow = new System.Windows.Forms.FolderBrowserDialog();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -253,6 +254,8 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "FormMain";
             this.Text = "Form1";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormMain_FormClosed);
+            this.Load += new System.EventHandler(this.FormMain_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -283,6 +286,7 @@
         private System.Windows.Forms.Button btnIOS;
         private System.Windows.Forms.Label labIOSOutPath;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.FolderBrowserDialog SelectWindow;
     }
 }
 

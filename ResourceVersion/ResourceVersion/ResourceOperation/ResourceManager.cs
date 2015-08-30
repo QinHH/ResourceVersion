@@ -8,5 +8,9 @@ namespace ResourceVersion.ResourceOperation
 {
     internal class ResourceManager
     {
+        public ResourceManager ()
+        {
+
+        }
     }
 }
