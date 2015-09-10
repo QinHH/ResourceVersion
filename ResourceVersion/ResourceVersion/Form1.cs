@@ -12,11 +12,9 @@ namespace ResourceVersion
 {
     public partial class FormMain : Form
     {
-        private ResourceOperation.ResourceManager m_ResourceManager = null;
 
         public FormMain()
         {
-            m_ResourceManager = new ResourceOperation.ResourceManager();
             InitializeComponent();
         }
 
