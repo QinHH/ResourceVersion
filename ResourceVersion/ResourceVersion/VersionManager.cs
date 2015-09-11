@@ -15,20 +15,6 @@ namespace ResourceVersion
             E_BUILDTYPE_ANDROID,
         }
 
-        static private ResourceOperation.ResourceManager m_ResourceManager = null;
-        static ResourceOperation.ResourceManager resourceManager
-        {
-            get
-            {
-                if(null == m_ResourceManager)
-                {
-                    m_ResourceManager = new ResourceOperation.ResourceManager();
-                }
-
-                return m_ResourceManager;
-            }
-        }
-
         static private E_BUILDTYPE m_buildType = E_BUILDTYPE.E_BUILDTYPE_STANDALONE;
         static public E_BUILDTYPE buildType
         {

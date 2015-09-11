@@ -17,4 +17,14 @@ namespace ResourceVersion.Common
 
         public const string showPathNone = "点击选择路径";
     }
+
+    public struct AeestStruce
+    {
+        public string ID;
+        public int Size;
+        public string Folder;
+        public string Path;
+        public string Key;
+        public string FullName;
+    }
 }
