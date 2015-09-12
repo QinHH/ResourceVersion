@@ -47,7 +47,7 @@ namespace ResourceVersion
         }
 
 
-        public void Build(E_BUILDTYPE doType)
+        static public void Build(E_BUILDTYPE doType)
         {
             m_buildType = doType;
 

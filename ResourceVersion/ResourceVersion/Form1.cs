@@ -56,7 +56,14 @@ namespace ResourceVersion
 
         private void btnStandalone_Click(object sender, EventArgs e)
         {
+            //             System.IO.FileInfo info = new System.IO.FileInfo("d://1.mp4");
+            //             Common.AeestStruce asset = new Common.AeestStruce();
+            // 
+            //             asset.ID = System.IO.Path.GetFileNameWithoutExtension(info.FullName);
+            //             asset.FullName = info.FullName;
+            //             asset.Size = info.Length;
 
+            VersionManager.Build(VersionManager.E_BUILDTYPE.E_BUILDTYPE_STANDALONE);
         }
 
         private void btnAndroid_Click(object sender, EventArgs e)
@@ -76,11 +83,14 @@ namespace ResourceVersion
 
         private void SetPathLabel()
         {
-            labStandaloneOutPtah.Text = string.IsNullOrEmpty(Common.PathMgr.strAndroidGetPath) ?
+            labAndroidResourcePtah.Text = string.IsNullOrEmpty(Common.PathMgr.strAndroidGetPath) ?
                 Common.CustomDefine.showPathNone : Common.PathMgr.strAndroidGetPath;
 
             labAndroidOutPtah.Text = string.IsNullOrEmpty(Common.PathMgr.strAndroidOutPath) ?
                 Common.CustomDefine.showPathNone : Common.PathMgr.strAndroidOutPath;
+
+            labIOSResourcePath.Text = string.IsNullOrEmpty(Common.PathMgr.strIOSGetPath) ?
+                Common.CustomDefine.showPathNone : Common.PathMgr.strIOSGetPath;
 
             labIOSOutPath.Text = string.IsNullOrEmpty(Common.PathMgr.strIOSOutPath) ?
                 Common.CustomDefine.showPathNone : Common.PathMgr.strIOSOutPath;
@@ -88,11 +98,10 @@ namespace ResourceVersion
             labStandaloneResourcePtah.Text = string.IsNullOrEmpty(Common.PathMgr.strStandAloneGetPath) ?
                 Common.CustomDefine.showPathNone : Common.PathMgr.strStandAloneGetPath;
 
-            labAndroidResourcePtah.Text = string.IsNullOrEmpty(Common.PathMgr.strAndroidGetPath) ?
-                Common.CustomDefine.showPathNone : Common.PathMgr.strAndroidGetPath;
+            labStandaloneOutPtah.Text = string.IsNullOrEmpty(Common.PathMgr.strStandAloneOutPath) ?
+                Common.CustomDefine.showPathNone : Common.PathMgr.strStandAloneOutPath;
 
-            labIOSResourcePath.Text = string.IsNullOrEmpty(Common.PathMgr.strIOSGetPath) ?
-                Common.CustomDefine.showPathNone : Common.PathMgr.strIOSGetPath;
+
         }
 
         private string ShowDirectionSelect()

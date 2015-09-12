@@ -21,7 +21,7 @@ namespace ResourceVersion.Common
     public struct AeestStruce
     {
         public string ID;
-        public int Size;
+        public long Size;
         public string Folder;
         public string Path;
         public string Key;
