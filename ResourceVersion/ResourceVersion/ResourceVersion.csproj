@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="protobuf-net, Version=2.0.0.668, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Common\protobuf-net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -47,8 +51,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\7zip\Common\CommandLineParser.cs" />
+    <Compile Include="Common\7zip\Common\CRC.cs" />
+    <Compile Include="Common\7zip\Common\InBuffer.cs" />
+    <Compile Include="Common\7zip\Common\OutBuffer.cs" />
+    <Compile Include="Common\7zip\Compress\LZMA\LzmaBase.cs" />
+    <Compile Include="Common\7zip\Compress\LZMA\LzmaDecoder.cs" />
+    <Compile Include="Common\7zip\Compress\LZMA\LzmaEncoder.cs" />
+    <Compile Include="Common\7zip\Compress\LZ\IMatchFinder.cs" />
+    <Compile Include="Common\7zip\Compress\LZ\LzBinTree.cs" />
+    <Compile Include="Common\7zip\Compress\LZ\LzInWindow.cs" />
+    <Compile Include="Common\7zip\Compress\LZ\LzOutWindow.cs" />
+    <Compile Include="Common\7zip\Compress\RangeCoder\RangeCoder.cs" />
+    <Compile Include="Common\7zip\Compress\RangeCoder\RangeCoderBit.cs" />
+    <Compile Include="Common\7zip\Compress\RangeCoder\RangeCoderBitTree.cs" />
+    <Compile Include="Common\7zip\ICoder.cs" />
     <Compile Include="Common\CustomDefine.cs" />
     <Compile Include="Common\PathMgr.cs" />
+    <Compile Include="Common\ResourceItem.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -72,6 +92,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="Common\ResourceItem.proto" />
+    <None Include="Common\ResourchList.proto" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -85,7 +107,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Common\protobuf-net.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

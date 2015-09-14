@@ -26,7 +26,7 @@ namespace ResourceVersion.ResourceOperation
             DirectoryInfo[] directions = info.GetDirectories();
             for (int i = 0, max = directions.Length; i < max; i++)
             {
-                GetAllFile(info, list);
+                GetAllFile(directions[i], list);
             }
         }
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections;
+using System.Collections.Generic;
 using System.Xml;
 using System.Text;
 using System.Windows.Forms;
@@ -12,6 +13,7 @@ namespace ResourceVersion.ResourceOperation
         static ArrayList m_AssetList = null;
         static XmlDocument m_XMlDoc = null;
         static XmlElement m_rootElement = null;
+        static List<AutoPb.ResourceItem> m_lstResourceList = null;
 
         static public void BuildVersion()
         {
@@ -37,6 +39,12 @@ namespace ResourceVersion.ResourceOperation
 
             foreach (FileInfo item in files)
             {
+                string[] strs = item.FullName.Split('.');
+                if (!strs[1].Equals("encoder"))
+                {
+                    continue;
+                }
+
                 Common.AeestStruce asset = new Common.AeestStruce();
 
                 asset.ID = Path.GetFileNameWithoutExtension(item.FullName);
@@ -50,6 +58,7 @@ namespace ResourceVersion.ResourceOperation
         static void Process()
         {
             InitXML();
+            m_lstResourceList = new List<AutoPb.ResourceItem>();
 
             foreach (Common.AeestStruce item in m_AssetList)
             {
@@ -57,6 +66,25 @@ namespace ResourceVersion.ResourceOperation
             }
 
             m_XMlDoc.Save(VersionManager.strCueOutPath + "/version.xml");
+//             using (FileStream fileStream = new FileStream(VersionManager.strCueOutPath + "/SourceList.encoder", FileMode.Create, FileAccess.ReadWrite))
+//             {
+//                 ProtoBuf.Serializer.Serialize<List<AutoPb.ResourceItem>>(fileStream, m_lstResourceList);
+//             }
+             using (FileStream fileStream = File.Create(VersionManager.strCueOutPath + "/SourceList.encoder"))
+             {
+                 using (MemoryStream memoryStream = new MemoryStream())
+                 {
+                     ProtoBuf.Serializer.Serialize<List<AutoPb.ResourceItem>>(memoryStream, m_lstResourceList);
+ 
+                     SevenZip.Compression.LZMA.Encoder encoder = new SevenZip.Compression.LZMA.Encoder();
+                     encoder.WriteCoderProperties(fileStream);
+ 
+                     fileStream.Write(System.BitConverter.GetBytes(memoryStream.Length), 0, 8);
+ 
+                     encoder.Code(memoryStream, fileStream, memoryStream.Length, -1, null);
+                 }
+             }
+
             Application.Exit();
         }
 
@@ -98,43 +126,33 @@ namespace ResourceVersion.ResourceOperation
             stream.Close();
 
             WriteXML(fileInfo);
+            AddToSourceList(fileInfo);
         }
 
         static void WriteXML(Common.AeestStruce fileInfo)
         {
             XmlElement elementContact = m_XMlDoc.CreateElement("Contact");
-            //             XmlAttribute attrID = m_XMlDoc.CreateAttribute("ID");
-            //             attrID.Value = fileInfo.ID;
-            //             elementContact.Attributes.Append(attrID);
-            //             m_rootElement.AppendChild(elementContact);
 
-            elementContact.SetAttribute("Path", fileInfo.Path);
-            elementContact.SetAttribute("Folder", fileInfo.Folder);
-            elementContact.SetAttribute("Key", fileInfo.Key);
-            elementContact.SetAttribute("Size", fileInfo.Size.ToString());
             elementContact.SetAttribute("ID", fileInfo.ID);
-
-            //XmlElement elementID = m_XMlDoc.CreateElement("ID");
-            //elementID.InnerText = fileInfo.ID;
-            //elementContact.AppendChild(elementID);
-
-            //XmlElement elementSize = m_XMlDoc.CreateElement("Size");
-            //elementSize.InnerText = fileInfo.Size.ToString();
-            //elementContact.AppendChild(elementSize);
-
-            //XmlElement elementKey = m_XMlDoc.CreateElement("Key");
-            //elementKey.InnerText = fileInfo.Key;
-            //elementContact.AppendChild(elementKey);
-
-            //XmlElement elementFolder = m_XMlDoc.CreateElement("Folder");
-            //elementFolder.InnerText = fileInfo.Folder;
-            //elementContact.AppendChild(elementFolder);
-
-            //XmlElement elementPath = m_XMlDoc.CreateElement("Path");
-            //elementPath.InnerText = fileInfo.Path;
-            //elementContact.AppendChild(elementPath);
+            elementContact.SetAttribute("Size", fileInfo.Size.ToString());
+            elementContact.SetAttribute("Key", fileInfo.Key);
+            elementContact.SetAttribute("Folder", fileInfo.Folder);
+            elementContact.SetAttribute("Path", fileInfo.Path);
 
             m_rootElement.AppendChild(elementContact);
+        }
+
+        static void AddToSourceList(Common.AeestStruce fileInfo)
+        {
+            AutoPb.ResourceItem item = new AutoPb.ResourceItem();
+
+            item.ID = fileInfo.ID;
+            item.Key = fileInfo.Key;
+            item.Size = fileInfo.Size;
+            item.Folder = fileInfo.Folder;
+            item.Path = fileInfo.Path;
+
+            m_lstResourceList.Add(item);
         }
 
         static string GetMD5HashFromFile(FileStream stream)
