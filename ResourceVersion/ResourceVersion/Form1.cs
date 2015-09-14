@@ -56,24 +56,17 @@ namespace ResourceVersion
 
         private void btnStandalone_Click(object sender, EventArgs e)
         {
-            //             System.IO.FileInfo info = new System.IO.FileInfo("d://1.mp4");
-            //             Common.AeestStruce asset = new Common.AeestStruce();
-            // 
-            //             asset.ID = System.IO.Path.GetFileNameWithoutExtension(info.FullName);
-            //             asset.FullName = info.FullName;
-            //             asset.Size = info.Length;
-
-            VersionManager.Build(VersionManager.E_BUILDTYPE.E_BUILDTYPE_STANDALONE);
+            VersionManager.Build(VersionManager.E_BUILDTYPE.E_BUILDTYPE_STANDALONE, textVersionNum.Text);
         }
 
         private void btnAndroid_Click(object sender, EventArgs e)
         {
-
+            VersionManager.Build(VersionManager.E_BUILDTYPE.E_BUILDTYPE_ANDROID, textVersionNum.Text);
         }
 
         private void btnIOS_Click(object sender, EventArgs e)
         {
-
+            VersionManager.Build(VersionManager.E_BUILDTYPE.E_BUILDTYPE_IOS, textVersionNum.Text);
         }
 
         private void FormMain_Load(object sender, EventArgs e)

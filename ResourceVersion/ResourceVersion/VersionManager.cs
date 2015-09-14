@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ResourceVersion
 {
@@ -13,6 +14,15 @@ namespace ResourceVersion
             E_BUILDTYPE_STANDALONE,
             E_BUILDTYPE_IOS,
             E_BUILDTYPE_ANDROID,
+        }
+
+        static string m_VersiongNum = string.Empty;
+        static public string VersionNum
+        {
+            get
+            {
+                return m_VersiongNum;
+            }
         }
 
         static private E_BUILDTYPE m_buildType = E_BUILDTYPE.E_BUILDTYPE_STANDALONE;
@@ -47,8 +57,15 @@ namespace ResourceVersion
         }
 
 
-        static public void Build(E_BUILDTYPE doType)
+        static public void Build(E_BUILDTYPE doType,string VersionNum)
         {
+            if (string.IsNullOrEmpty(VersionNum))
+            {
+                MessageBox.Show("请输入版本号！");
+                return;
+            }
+
+            m_VersiongNum = VersionNum;
             m_buildType = doType;
 
             switch (VersionManager.buildType)
@@ -76,6 +93,8 @@ namespace ResourceVersion
             }
 
             ResourceOperation.VersionBuilder.BuildVersion();
+
+            Application.Exit();
         }
     }
 }

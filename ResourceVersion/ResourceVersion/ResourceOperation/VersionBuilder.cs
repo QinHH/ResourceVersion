@@ -66,26 +66,29 @@ namespace ResourceVersion.ResourceOperation
             }
 
             m_XMlDoc.Save(VersionManager.strCueOutPath + "/version.xml");
-//             using (FileStream fileStream = new FileStream(VersionManager.strCueOutPath + "/SourceList.encoder", FileMode.Create, FileAccess.ReadWrite))
-//             {
-//                 ProtoBuf.Serializer.Serialize<List<AutoPb.ResourceItem>>(fileStream, m_lstResourceList);
-//             }
-             using (FileStream fileStream = File.Create(VersionManager.strCueOutPath + "/SourceList.encoder"))
-             {
-                 using (MemoryStream memoryStream = new MemoryStream())
-                 {
-                     ProtoBuf.Serializer.Serialize<List<AutoPb.ResourceItem>>(memoryStream, m_lstResourceList);
- 
-                     SevenZip.Compression.LZMA.Encoder encoder = new SevenZip.Compression.LZMA.Encoder();
-                     encoder.WriteCoderProperties(fileStream);
- 
-                     fileStream.Write(System.BitConverter.GetBytes(memoryStream.Length), 0, 8);
- 
-                     encoder.Code(memoryStream, fileStream, memoryStream.Length, -1, null);
-                 }
-             }
-
-            Application.Exit();
+            //             using (FileStream fileStream = new FileStream(VersionManager.strCueOutPath + "/SourceList.encoder", FileMode.Create, FileAccess.ReadWrite))
+            //             {
+            //                 ProtoBuf.Serializer.Serialize<List<AutoPb.ResourceItem>>(fileStream, m_lstResourceList);
+            //             }
+            //              using (FileStream fileStream = File.Create(VersionManager.strCueOutPath + "/SourceList.encoder"))
+            //              {
+            //                  using (MemoryStream memoryStream = new MemoryStream())
+            //                  {
+            //                      ProtoBuf.Serializer.Serialize<List<AutoPb.ResourceItem>>(memoryStream, m_lstResourceList);
+            //  
+            //                      SevenZip.Compression.LZMA.Encoder encoder = new SevenZip.Compression.LZMA.Encoder();
+            //                      encoder.WriteCoderProperties(fileStream);
+            //  
+            //                      fileStream.Write(System.BitConverter.GetBytes(memoryStream.Length), 0, 8);
+            //  
+            //                      encoder.Code(memoryStream, fileStream, memoryStream.Length, -1, null);
+            //                  }
+            //              }
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                ProtoBuf.Serializer.Serialize<List<AutoPb.ResourceItem>>(memoryStream, m_lstResourceList);
+                EncoderStream.Encoder(VersionManager.strCueOutPath + "/SourceList.encoder", memoryStream);
+            }
         }
 
         static void InitXML()
@@ -127,6 +130,8 @@ namespace ResourceVersion.ResourceOperation
 
             WriteXML(fileInfo);
             AddToSourceList(fileInfo);
+
+            WriteVersionNum();
         }
 
         static void WriteXML(Common.AeestStruce fileInfo)
@@ -167,6 +172,16 @@ namespace ResourceVersion.ResourceOperation
             }
 
             return sb.ToString();
+        }
+
+        static void WriteVersionNum()
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                byte[] byteArray = System.Text.Encoding.Default.GetBytes(VersionManager.VersionNum);
+                stream.Write(byteArray, 0, byteArray.Length);
+                EncoderStream.Encoder(VersionManager.strCueOutPath + "/VersionNum.encoder", stream);
+            }
         }
     }
 }
