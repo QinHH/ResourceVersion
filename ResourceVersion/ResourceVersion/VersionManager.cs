@@ -66,6 +66,8 @@ namespace ResourceVersion
             }
 
             m_VersiongNum = VersionNum;
+            ConfigurationMgr.AddConfigurationElement(Common.CustomDefine.configKey_VersionNum, m_VersiongNum);
+
             m_buildType = doType;
 
             switch (VersionManager.buildType)

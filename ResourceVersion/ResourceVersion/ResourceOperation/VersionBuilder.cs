@@ -24,7 +24,7 @@ namespace ResourceVersion.ResourceOperation
 
         static void DeleteOldResource()
         {
-            if(Directory.Exists(VersionManager.strCueOutPath))
+            if (Directory.Exists(VersionManager.strCueOutPath))
             {
                 Directory.Delete(VersionManager.strCueOutPath, true);
             }
@@ -66,27 +66,11 @@ namespace ResourceVersion.ResourceOperation
             }
 
             m_XMlDoc.Save(VersionManager.strCueOutPath + "/version.xml");
-            //             using (FileStream fileStream = new FileStream(VersionManager.strCueOutPath + "/SourceList.encoder", FileMode.Create, FileAccess.ReadWrite))
-            //             {
-            //                 ProtoBuf.Serializer.Serialize<List<AutoPb.ResourceItem>>(fileStream, m_lstResourceList);
-            //             }
-            //              using (FileStream fileStream = File.Create(VersionManager.strCueOutPath + "/SourceList.encoder"))
-            //              {
-            //                  using (MemoryStream memoryStream = new MemoryStream())
-            //                  {
-            //                      ProtoBuf.Serializer.Serialize<List<AutoPb.ResourceItem>>(memoryStream, m_lstResourceList);
-            //  
-            //                      SevenZip.Compression.LZMA.Encoder encoder = new SevenZip.Compression.LZMA.Encoder();
-            //                      encoder.WriteCoderProperties(fileStream);
-            //  
-            //                      fileStream.Write(System.BitConverter.GetBytes(memoryStream.Length), 0, 8);
-            //  
-            //                      encoder.Code(memoryStream, fileStream, memoryStream.Length, -1, null);
-            //                  }
-            //              }
+
             using (MemoryStream memoryStream = new MemoryStream())
             {
                 ProtoBuf.Serializer.Serialize<List<AutoPb.ResourceItem>>(memoryStream, m_lstResourceList);
+
                 EncoderStream.Encoder(VersionManager.strCueOutPath + "/SourceList.encoder", memoryStream);
             }
 
@@ -127,7 +111,7 @@ namespace ResourceVersion.ResourceOperation
             fileInfo.Path = folderPath;
             fileInfo.Key = hashCode;
             fileInfo.Size = stream.Length;
-
+            fileInfo.OriginalSize = GetOrgianlSize(stream);
             stream.Close();
 
             WriteXML(fileInfo);
@@ -140,6 +124,8 @@ namespace ResourceVersion.ResourceOperation
 
             elementContact.SetAttribute("ID", fileInfo.ID);
             elementContact.SetAttribute("Size", fileInfo.Size.ToString());
+            elementContact.SetAttribute("OrginalSize", fileInfo.OriginalSize.ToString());
+            elementContact.SetAttribute("Path", fileInfo.Path);
             elementContact.SetAttribute("Key", fileInfo.Key);
             elementContact.SetAttribute("Folder", fileInfo.Folder);
             elementContact.SetAttribute("Path", fileInfo.Path);
@@ -154,6 +140,7 @@ namespace ResourceVersion.ResourceOperation
             item.ID = fileInfo.ID;
             item.Key = fileInfo.Key;
             item.Size = fileInfo.Size;
+            item.OriginalSize = fileInfo.OriginalSize;
             item.Folder = fileInfo.Folder;
             item.Path = fileInfo.Path;
 
@@ -182,6 +169,21 @@ namespace ResourceVersion.ResourceOperation
                 stream.Write(byteArray, 0, byteArray.Length);
                 EncoderStream.Encoder(VersionManager.strCueOutPath + "/VersionNum.encoder", stream);
             }
+        }
+
+        static long GetOrgianlSize(Stream stream)
+        {
+            long ret = 0;
+
+            byte[] properties = new byte[5];
+            stream.Read(properties, 0, properties.Length);
+
+            byte[] fileLengthBytes = new byte[8];
+            stream.Read(fileLengthBytes, 0, 8);
+
+            ret = System.BitConverter.ToInt64(fileLengthBytes, 0);
+
+            return ret;
         }
     }
 }

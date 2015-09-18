@@ -15,6 +15,8 @@ namespace ResourceVersion.Common
         public const string configKey_IOSOutPath = "IOSOutPath";
         public const string configKey_IOSGetPath = "IOSGetPath";
 
+        public const string configKey_VersionNum = "VersionNum";
+
         public const string showPathNone = "点击选择路径";
     }
 
@@ -26,5 +28,6 @@ namespace ResourceVersion.Common
         public string Path;
         public string Key;
         public string FullName;
+        public long OriginalSize;
     }
 }

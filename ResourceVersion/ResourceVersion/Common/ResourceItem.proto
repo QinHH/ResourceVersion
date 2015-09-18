@@ -2,7 +2,8 @@ message ResourceItem
 {
 	required string ID = 1;
 	required int64 Size = 2;
-	required string Key = 3;
-	required string Folder = 4;
-	required string Path = 5;
+	required int64 OriginalSize = 3;
+	required string Key = 4;
+	required string Folder = 5;
+	required string Path = 6;
 }

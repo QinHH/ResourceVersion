@@ -66,6 +66,7 @@
     <Compile Include="Common\7zip\Compress\RangeCoder\RangeCoderBit.cs" />
     <Compile Include="Common\7zip\Compress\RangeCoder\RangeCoderBitTree.cs" />
     <Compile Include="Common\7zip\ICoder.cs" />
+    <Compile Include="Common\ConfigurationMgr.cs" />
     <Compile Include="Common\CustomDefine.cs" />
     <Compile Include="Common\EncoderStream.cs" />
     <Compile Include="Common\PathMgr.cs" />

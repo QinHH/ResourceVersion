@@ -20,37 +20,37 @@ namespace ResourceVersion
 
         private void labStandaloneOutPtah_Click(object sender, EventArgs e)
         {
-            Common.PathMgr.strStandAloneOutPath = ShowDirectionSelect();
+            Common.PathMgr.strStandAloneOutPath = ShowDirectionSelect(Common.PathMgr.strStandAloneOutPath);
             labStandaloneOutPtah.Text = Common.PathMgr.strStandAloneOutPath;
         }
 
         private void labStandaloneResourcePtah_Click(object sender, EventArgs e)
         {
-            Common.PathMgr.strStandAloneGetPath = ShowDirectionSelect();
+            Common.PathMgr.strStandAloneGetPath = ShowDirectionSelect(Common.PathMgr.strStandAloneGetPath);
             labStandaloneResourcePtah.Text = Common.PathMgr.strStandAloneGetPath;
         }
 
         private void labAndroidResourcePtah_Click(object sender, EventArgs e)
         {
-            Common.PathMgr.strAndroidGetPath = ShowDirectionSelect();
+            Common.PathMgr.strAndroidGetPath = ShowDirectionSelect(Common.PathMgr.strAndroidGetPath);
             labAndroidResourcePtah.Text = Common.PathMgr.strAndroidGetPath;
         }
 
         private void labAndroidOutPtah_Click(object sender, EventArgs e)
         {
-            Common.PathMgr.strAndroidOutPath = ShowDirectionSelect();
+            Common.PathMgr.strAndroidOutPath = ShowDirectionSelect(Common.PathMgr.strAndroidOutPath);
             this.labAndroidOutPtah.Text = Common.PathMgr.strAndroidOutPath;
         }
 
         private void labIOSResourcePath_Click(object sender, EventArgs e)
         {
-            Common.PathMgr.strIOSGetPath = ShowDirectionSelect();
+            Common.PathMgr.strIOSGetPath = ShowDirectionSelect(Common.PathMgr.strIOSGetPath);
             this.labIOSResourcePath.Text = Common.PathMgr.strIOSGetPath;
         }
 
         private void labIOSOutPath_Click(object sender, EventArgs e)
         {
-            Common.PathMgr.strIOSOutPath = ShowDirectionSelect();
+            Common.PathMgr.strIOSOutPath = ShowDirectionSelect(Common.PathMgr.strIOSOutPath);
             this.labIOSOutPath.Text = Common.PathMgr.strIOSOutPath;
         }
 
@@ -72,6 +72,7 @@ namespace ResourceVersion
         private void FormMain_Load(object sender, EventArgs e)
         {
             SetPathLabel();
+            textVersionNum.Text = ConfigurationMgr.ReadConfigurationElement(Common.CustomDefine.configKey_VersionNum);
         }
 
         private void SetPathLabel()
@@ -97,7 +98,7 @@ namespace ResourceVersion
 
         }
 
-        private string ShowDirectionSelect()
+        private string ShowDirectionSelect(string path)
         {
             if (this.SelectWindow.ShowDialog() == DialogResult.OK)
             {
@@ -111,7 +112,7 @@ namespace ResourceVersion
                 }
             }
 
-            return "";
+            return path;
         }
 
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)

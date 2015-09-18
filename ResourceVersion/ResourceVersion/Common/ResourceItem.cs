@@ -29,22 +29,29 @@ namespace AutoPb//ResourceItem
       get { return _Size; }
       set { _Size = value; }
     }
+    private long _OriginalSize;
+    [global::ProtoBuf.ProtoMember(3, IsRequired = true, Name=@"OriginalSize", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    public long OriginalSize
+    {
+      get { return _OriginalSize; }
+      set { _OriginalSize = value; }
+    }
     private string _Key;
-    [global::ProtoBuf.ProtoMember(3, IsRequired = true, Name=@"Key", DataFormat = global::ProtoBuf.DataFormat.Default)]
+    [global::ProtoBuf.ProtoMember(4, IsRequired = true, Name=@"Key", DataFormat = global::ProtoBuf.DataFormat.Default)]
     public string Key
     {
       get { return _Key; }
       set { _Key = value; }
     }
     private string _Folder;
-    [global::ProtoBuf.ProtoMember(4, IsRequired = true, Name=@"Folder", DataFormat = global::ProtoBuf.DataFormat.Default)]
+    [global::ProtoBuf.ProtoMember(5, IsRequired = true, Name=@"Folder", DataFormat = global::ProtoBuf.DataFormat.Default)]
     public string Folder
     {
       get { return _Folder; }
       set { _Folder = value; }
     }
     private string _Path;
-    [global::ProtoBuf.ProtoMember(5, IsRequired = true, Name=@"Path", DataFormat = global::ProtoBuf.DataFormat.Default)]
+    [global::ProtoBuf.ProtoMember(6, IsRequired = true, Name=@"Path", DataFormat = global::ProtoBuf.DataFormat.Default)]
     public string Path
     {
       get { return _Path; }
