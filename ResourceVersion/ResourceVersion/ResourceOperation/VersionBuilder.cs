@@ -89,6 +89,8 @@ namespace ResourceVersion.ResourceOperation
                 ProtoBuf.Serializer.Serialize<List<AutoPb.ResourceItem>>(memoryStream, m_lstResourceList);
                 EncoderStream.Encoder(VersionManager.strCueOutPath + "/SourceList.encoder", memoryStream);
             }
+
+            WriteVersionNum();
         }
 
         static void InitXML()
@@ -130,8 +132,6 @@ namespace ResourceVersion.ResourceOperation
 
             WriteXML(fileInfo);
             AddToSourceList(fileInfo);
-
-            WriteVersionNum();
         }
 
         static void WriteXML(Common.AeestStruce fileInfo)
